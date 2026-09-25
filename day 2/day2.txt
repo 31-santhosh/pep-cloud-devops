@@ -1,0 +1,9 @@
+docker search node
+docker pull node
+docler pull httpd
+docker images
+docker ps -a
+docker search httpd
+docker create httpd
+docker start optimistic_mclean
+
