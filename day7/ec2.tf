@@ -14,24 +14,34 @@ resource "aws_instance" "testec2e" {
 resource "aws_security_group" "allow_tls" {
   name        = "allow_tls"
   description = "Allow TLS inbound traffic and all outbound traffic"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = aws_vpc.vpcdemo.id
 
   tags = {
-    Name = "allow_tls"
+    Name = "testsg"
   }
 }
 
-resource "aws_vpc_security_group_ingress_rule" "allow_tls_ipv4" {
+resource "aws_vpc_security_group_ingress_rule" "ssh" {
   security_group_id = aws_security_group.allow_tls.id
-  cidr_ipv4         = aws_vpc.main.cidr_block
-  from_port         = 80
+  cidr_ipv4         = aws_vpc.vpcdemo.cidr_block
+  from_port         = 22
   ip_protocol       = "tcp"
-  to_port           = 80
+  to_port           = 22
 }
 
-resource "aws_vpc_security_group_ingress_rule" "allow_tls_ipv4" {
+
+resource "aws_vpc_security_group_ingress_rule" "https" {
   security_group_id = aws_security_group.allow_tls.id
-  cidr_ipv4         = aws_vpc.main.cidr_block
+  cidr_ipv4         = aws_vpc.vpcdemo.cidr_block
+  from_port         = 443
+  ip_protocol       = "tcp"
+  to_port           = 443
+}
+
+
+resource "aws_vpc_security_group_ingress_rule" "http" {
+  security_group_id = aws_security_group.allow_tls.id
+  cidr_ipv4         = aws_vpc.vpcdemo.cidr_block
   from_port         = 80
   ip_protocol       = "tcp"
   to_port           = 80
