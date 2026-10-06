@@ -1,6 +1,7 @@
 resource "aws_vpc" "vpcdemo" {
   cidr_block       = "13.0.0.0/16"
   instance_tenancy = "default"
+  
 
   tags = {
     Name = "demo-vpc"
@@ -10,6 +11,7 @@ resource "aws_vpc" "vpcdemo" {
 resource "aws_subnet" "subdemo-priv" {
   vpc_id     = aws_vpc.vpcdemo.id
   cidr_block = "13.0.1.0/24"
+  
 
   tags = {
     Name = "private-sub"
@@ -18,6 +20,7 @@ resource "aws_subnet" "subdemo-priv" {
 
 resource "aws_subnet" "subdemo-pub" {
   vpc_id     = aws_vpc.vpcdemo.id
+  availability_zone = "us-east-1a"
   cidr_block = "13.0.2.0/24"
 
   tags = {
